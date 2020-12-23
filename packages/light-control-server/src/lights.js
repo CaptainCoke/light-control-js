@@ -1,36 +1,37 @@
 import _ from 'lodash';
-import { deconz } from './api.js';
+import { DeconzResource } from './api.js';
 
-const shortenLightState = (state) => _.pick(state, 'on', 'bri', 'ct', 'xy');
+const shortenLightState = (state) =>_.pick(state, 'on', 'bri', 'ct', 'xy');
+const sanitizeState = ({ on, bri, hue, sat, ct, xy }) => _.omitBy({ on, bri, hue, sat, ct, xy }, _.isNil);
 
-export const printLight = ({ id, name, state }) => {
-  console.log(id, name, shortenLightState(state));
-};
+export class LightResource extends DeconzResource {
+  static endpoint = '/lights';
 
-export const getLight = (id) => deconz.get(`/lights/${id}`).then(({ data }) => ({ id, ...data }));
+  getState() {
+    return this.attributes.state;
+  }
 
-export const getAllLightIds = () => deconz.get('/lights').then(({ data }) => _.keys(data));
+  async setState({ transitiontime, ...state }) {
+    const cleanState = sanitizeState(state);
+    await this.wrap('/state').put({ ...cleanState, transitiontime });
+    _.merge(this.attributes.state, cleanState);
+  }
 
-export const setLightState = (id, state) => deconz.put(`/lights/${id}/state`, state).then(({ data }) => {
-  const changes = {};
-  data.forEach(({ success }) => {
-    _.entries(success).forEach(([key, value]) => {
-      const stateName = _.last(_.split(key, '/'));
-      changes[stateName] = value;
-    });
-  });
-  console.log(id, shortenLightState(changes));
-  return { id, state: changes };
-});
+  updateState(state) {
+    _.merge(this.attributes.state, sanitizeState(state));
+  }
 
-export const onLightChanged = (id, state) => {
+  print() {
+    console.log(this.attributes.id, this.attributes.name, shortenLightState(this.attributes.state));
+  }
+}
+
+export function onLightChanged(id, state) {
   console.log(`Light ${id} changed to`, shortenLightState(state));
+  LightResource.detail(id).then((light) => light.updateState(state));
 };
 
 export default {
-  printLight,
-  getLight,
-  getAllLightIds,
-  setLightState,
+  LightResource,
   onLightChanged,
 };

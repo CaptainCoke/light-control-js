@@ -1,8 +1,28 @@
-import _ from 'lodash';
-import { deconz } from './api.js';
+import { DeconzResource } from './api.js';
+import { SceneResource } from './scenes.js';
 
-export const getAllGroupIds = () => deconz.get('/groups').then(({ data }) => _.keys(data));
+export class GroupResource extends DeconzResource {
+  static endpoint = '/groups';
+
+  scenes() {
+    const groupId = this.attributes.id;
+    class GroupScenes extends SceneResource {
+      static endpoint = `/groups/${groupId}/scenes`;
+      static gid = groupId;
+    };
+    return GroupScenes;
+  }
+
+  print() {
+    console.log(this.attributes.id, this.attributes.name);
+  }
+}
+
+export function onGroupChanged(id, state) {
+  console.log(`Group ${id} changed to`, state);
+}
 
 export default {
-  getAllGroupIds,
+  GroupResource,
+  onGroupChanged,
 };
