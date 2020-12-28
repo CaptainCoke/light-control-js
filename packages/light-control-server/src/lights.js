@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { DeconzResource } from './api.js';
 
-const shortenLightState = (state) =>_.pick(state, 'on', 'bri', 'ct', 'xy');
-const sanitizeState = ({ on, bri, hue, sat, ct, xy }) => _.omitBy({ on, bri, hue, sat, ct, xy }, _.isNil);
+const shortenState = (state) => _.pick(state, 'on', 'bri', 'ct', 'xy');
+const sanitizeState = (state) => _.pick(state, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
 
 export class LightResource extends DeconzResource {
   static endpoint = '/lights';
@@ -22,16 +22,10 @@ export class LightResource extends DeconzResource {
   }
 
   print() {
-    console.log(this.attributes.id, this.attributes.name, shortenLightState(this.attributes.state));
+    console.log(this.attributes.id, this.attributes.name, shortenState(this.attributes.state));
   }
 }
 
-export function onLightChanged(id, state) {
-  console.log(`Light ${id} changed to`, shortenLightState(state));
-  LightResource.detail(id).then((light) => light.updateState(state));
-};
-
 export default {
   LightResource,
-  onLightChanged,
 };

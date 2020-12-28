@@ -25,12 +25,6 @@ export class DeconzResource extends Resource.default {
   static client = new DeconzClient(`http://${process.env.DECONZ_HOST}/api/${process.env.DECONZ_API_KEY}/`);
 }
 
-export async function getConfig() {
-  const { data } = await DeconzResource.wrap('/config').get();
-  return data;
-}
-
 export default {
   DeconzResource,
-  getConfig,
 };

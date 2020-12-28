@@ -20,11 +20,6 @@ export class SceneResource extends DeconzResource {
   }
 }
 
-export const onSceneRecalled = ({ gid: group, scid: scene }) => {
-  console.log(`Group ${group} changed to scene ${scene}`);
-};
-
 export default {
   SceneResource,
-  onSceneRecalled,
 };
