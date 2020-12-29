@@ -1,5 +1,9 @@
 import _ from 'lodash';
+import debug from 'debug';
 import { DeconzResource } from './api.js';
+
+const log = debug("lcs:light");
+log.log = console.log.bind(console);
 
 const shortenState = (state) => _.pick(state, 'on', 'bri', 'ct', 'xy');
 const sanitizeState = (state) => _.pick(state, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
@@ -22,7 +26,7 @@ export class LightResource extends DeconzResource {
   }
 
   print() {
-    console.log(this.attributes.id, this.attributes.name, shortenState(this.attributes.state));
+    log(this.attributes.id, this.attributes.name, shortenState(this.attributes.state));
   }
 }
 
