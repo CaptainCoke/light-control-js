@@ -1,77 +1,28 @@
-import chalk from 'chalk';
-import debug from 'debug';
 import { setupWebsocket } from './websocket.js';
 import { LightResource } from './lights.js';
 import { GroupResource } from './groups.js';
 import { SensorResource } from './sensors.js';
+import { reactOnButton } from './actions/react-on-button.js';
+import { makeLog, warning, notice } from './logging.js';
 
-const warning = chalk.keyword('orange');
-const info = chalk.bgGreen.black;
-const notice = chalk.gray;
+const log = makeLog('lcs:event');
 
-const log = debug('lcs:logic');
-log.log = console.log.bind(console);
-
-const remoteButtonActions = { 
-  5: {
-    left: { group: 1, scene: { offset: -1 } },
-    right: { group: 1, scene: { offset: +1 } },
-    up: { group: 1, action: { bri: 255 } },
-    down: { group: 1, action: { bri: 10 } },
-    power: { group: 1, action: { toggle: true } },
-  },
-};
-
-async function recallScene(gid, { id, offset }) {
-  const group = await GroupResource.detail(gid);
-  const scid = id ?? await group.getRelativeSceneId(offset);
-  if (scid) {
-    log(info(`Recalling scene ${scid} of group ${gid}`));
-    const scene = await group.scenes().detail(scid);
-    scene.recall();
-  } else {
-    log(warning('No scene for to recall'), { gid, scid: id, offset })
-  }
-}
-
-async function groupAction(gid, action) {
-  log(info(`Performing group action on ${gid}:`), action);
-  const group = await GroupResource.detail(gid);
-  group.setAction(action);
-}
-
-function performButtonAction(what) {
-  const { group, scene, action } = what;
-  if (group && scene) recallScene(group, scene);
-  else if (group && action) groupAction(group, action);
-  else log(warning('Unsupported button action'), what);
-}
-
-async function onRemoteChanged(id, buttonevent) {
-  const remote = await SensorResource.detail(id);
-    const { button, action: pressaction } = remote.button(buttonevent);
-    if (button) {
-      log(`Remote ${id}`, { button, pressaction });
-      const action = remoteButtonActions?.[id]?.[button];
-      if (action) performButtonAction(action);
-    } else {
-      log(warning(`No button map for ${buttonevent} on remote ${id}`));
-    }
-}
-
-async function onLightChanged(id, state) {
+async function onLightChanged(id) {
   const light = await LightResource.detail(id);
   await light.update();
   light.print();
 }
 
-function onSensorChanged(id, state) {
+async function onSensorChanged(id, state) {
+  const sensor = await SensorResource.detail(id);
+  await sensor.update();
+  sensor.print();
+
   const { buttonevent } = state;
-  if (buttonevent) onRemoteChanged(id, buttonevent);
-  else log(notice(`Sensor ${id} changed to`), state);
+  if (buttonevent) reactOnButton(sensor.button(buttonevent));
 }
 
-async function onGroupChanged(id, state) {
+async function onGroupChanged(id) {
   const group = await GroupResource.detail(id);
   await group.update();
   group.print();

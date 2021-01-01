@@ -1,10 +1,9 @@
 import _ from 'lodash';
-import debug from 'debug';
 import { DeconzResource } from './api.js';
 import { GroupResource } from './groups.js';
+import { makeLog } from './logging.js';
 
-const log = debug("lcs:scene");
-log.log = console.log.bind(console);
+const log = makeLog('lcs:scene');
 
 export class SceneResource extends DeconzResource {
   static gid = 0;

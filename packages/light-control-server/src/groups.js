@@ -1,10 +1,9 @@
 import _ from 'lodash';
-import debug from 'debug';
 import { DeconzResource } from './api.js';
 import { SceneResource } from './scenes.js';
+import { makeLog } from './logging.js';
 
-const log = debug('lcs:group');
-log.log = console.log.bind(console);
+const log = makeLog('lcs:group');
 
 const shortenAction = (action) => _.pick(action, 'on', 'bri', 'scene');
 const sanitizeAction = (action) => _.pick(action, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');

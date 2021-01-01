@@ -1,9 +1,8 @@
-import debug from 'debug';
 import { DeconzResource } from './api.js';
 import buttonMaps from './button-maps.config.js';
+import { makeLog } from './logging.js';
 
-const log = debug("lcs:sensor");
-log.log = console.log.bind(console);
+const log = makeLog('lcs:sensor');
 
 export class SensorResource extends DeconzResource {
   static endpoint = '/sensors';
@@ -14,7 +13,7 @@ export class SensorResource extends DeconzResource {
 
   button(buttonevent) {
     const { button, action } = this.buttons()?.[buttonevent];
-    return { button, action };
+    return { remote: this.attributes.id, button, action };
   }
 
   print() {

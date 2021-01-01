@@ -1,9 +1,8 @@
 import _ from 'lodash';
-import debug from 'debug';
 import { DeconzResource } from './api.js';
+import { makeLog } from './logging.js';
 
-const log = debug("lcs:light");
-log.log = console.log.bind(console);
+const log = makeLog('lcs:light');
 
 const shortenState = (state) => _.pick(state, 'on', 'bri', 'ct', 'xy');
 const sanitizeState = (state) => _.pick(state, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');

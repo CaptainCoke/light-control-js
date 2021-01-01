@@ -1,9 +1,8 @@
 import WebSocket from 'ws';
-import debug from 'debug';
 import { DeconzResource } from './api.js';
+import { makeLog } from './logging.js';
 
-const log = debug('lcs:ws');
-log.log = console.log.bind(console);
+const log = makeLog('lcs:ws');
 
 let deconzWebSocket;
 
