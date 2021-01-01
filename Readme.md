@@ -26,3 +26,7 @@ Example:
 ### Run the server standalone
 - `cd packages/light-control-server`
 - `npm start`
+
+## Run the webapp
+- `cd packages/light-control-app`
+- `npm start`
