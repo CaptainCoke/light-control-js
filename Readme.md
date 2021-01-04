@@ -28,5 +28,17 @@ Example:
 - `npm start`
 
 ## Run the webapp
+
+### Setup environment
+First, generate yourself an API key for the deCONZ REST API.
+Then, set the environment variables `DECONZ_HOST` and `DECONZ_API_KEY` appropriately.
+
+Alternatively, create a file `packages/light-control-app/.env` that contains assignments for all variables.
+
+Example:
+- `DECONZ_HOST=localhost`
+- `DECONZ_API_KEY=1234567890`
+
+### Starting a local server that runs the webapp 
 - `cd packages/light-control-app`
 - `npm start`
