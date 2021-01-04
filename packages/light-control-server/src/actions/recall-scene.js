@@ -1,5 +1,5 @@
-import { GroupResource } from '../groups.js';
-import { makeLog, info } from '../logging.js';
+import { GroupResource } from 'light-control-lib';
+import { makeLog, info } from 'light-control-lib/src/logging.js';
 
 const log = makeLog('lcs:action');
 

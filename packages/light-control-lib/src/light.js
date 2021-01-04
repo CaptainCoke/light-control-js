@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { DeconzResource } from './api.js';
+import DeconzResource from './resource.js';
 import { makeLog } from './logging.js';
 
 const log = makeLog('lcs:light');
@@ -7,7 +7,7 @@ const log = makeLog('lcs:light');
 const shortenState = (state) => _.pick(state, 'on', 'bri', 'ct', 'xy');
 const sanitizeState = (state) => _.pick(state, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
 
-export class LightResource extends DeconzResource {
+export default class LightResource extends DeconzResource {
   static endpoint = '/lights';
 
   getState() {
@@ -28,7 +28,3 @@ export class LightResource extends DeconzResource {
     log(this.attributes.id, this.attributes.name, shortenState(this.attributes.state));
   }
 }
-
-export default {
-  LightResource,
-};

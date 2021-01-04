@@ -1,9 +1,8 @@
 import _ from 'lodash';
-import Resource from 'rest-resource';
 import { DefaultClient } from 'rest-resource/dist/client.js';
 import isNumber from 'is-number';
 
-class DeconzClient extends DefaultClient {
+export default class DeconzClient extends DefaultClient {
   negotiateContent(ResourceClass) {
     return (response) => {
       const { data } = response;
@@ -20,11 +19,3 @@ class DeconzClient extends DefaultClient {
     }
   }
 }
-
-export class DeconzResource extends Resource.default {
-  static client = new DeconzClient(`http://${process.env.DECONZ_HOST}/api/${process.env.DECONZ_API_KEY}/`);
-}
-
-export default {
-  DeconzResource,
-};

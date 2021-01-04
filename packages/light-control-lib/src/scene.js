@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { DeconzResource } from './api.js';
-import { GroupResource } from './groups.js';
+import DeconzResource from './resource.js';
+import GroupResource from './group.js';
 import { makeLog } from './logging.js';
 
 const log = makeLog('lcs:scene');
 
-export class SceneResource extends DeconzResource {
+export default class SceneResource extends DeconzResource {
   static gid = 0;
 
   static group() {
@@ -22,7 +22,3 @@ export class SceneResource extends DeconzResource {
     await this.wrap('/recall').put();
   }
 }
-
-export default {
-  SceneResource,
-};

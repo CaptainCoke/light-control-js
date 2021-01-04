@@ -1,10 +1,10 @@
-import { DeconzResource } from './api.js';
-import buttonMaps from './button-maps.config.js';
+import DeconzResource from './resource.js';
+import buttonMaps from '../config/button-maps.config.js';
 import { makeLog } from './logging.js';
 
 const log = makeLog('lcs:sensor');
 
-export class SensorResource extends DeconzResource {
+export default class SensorResource extends DeconzResource {
   static endpoint = '/sensors';
 
   buttons() {
@@ -20,7 +20,3 @@ export class SensorResource extends DeconzResource {
     log(this.attributes.id, this.attributes.name, this.attributes.state);
   }
 }
-
-export default {
-  SensorResource,
-};

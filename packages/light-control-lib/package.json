@@ -1,0 +1,23 @@
+{
+  "name": "light-control-lib",
+  "version": "1.0.0",
+  "description": "Common functionality to use deCONZ REST-API",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Christopher Schwartz",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
+    "debug": "^4.3.1",
+    "is-number": "^7.0.0",
+    "lodash": "^4.17.20",
+    "rest-resource": "^0.9.3"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}

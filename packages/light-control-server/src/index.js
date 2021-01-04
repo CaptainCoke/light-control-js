@@ -1,9 +1,11 @@
-import { setupWebsocket } from './websocket.js';
-import { LightResource } from './lights.js';
-import { GroupResource } from './groups.js';
-import { SensorResource } from './sensors.js';
+import {
+  LightResource,
+  GroupResource,
+  SensorResource
+} from 'light-control-lib';
+import { makeLog, warning, notice } from 'light-control-lib/src/logging.js';
 import { reactOnButton } from './actions/react-on-button.js';
-import { makeLog, warning, notice } from './logging.js';
+import { setupWebsocket } from './websocket';
 
 const log = makeLog('lcs:event');
 

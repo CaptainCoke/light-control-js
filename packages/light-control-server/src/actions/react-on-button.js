@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { recallScene } from './recall-scene.js';
 import { groupAction } from './group-action.js';
-import { makeLog, warning } from '../logging.js';
+import { makeLog, warning } from 'light-control-lib/src/logging.js';
 
 const log = makeLog('lcs:action');
 

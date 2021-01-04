@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { DeconzResource } from './api.js';
-import { SceneResource } from './scenes.js';
+import DeconzResource from './resource.js';
+import SceneResource from './scene.js';
 import { makeLog } from './logging.js';
 
 const log = makeLog('lcs:group');
@@ -8,7 +8,7 @@ const log = makeLog('lcs:group');
 const shortenAction = (action) => _.pick(action, 'on', 'bri', 'scene');
 const sanitizeAction = (action) => _.pick(action, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
 
-export class GroupResource extends DeconzResource {
+export default class GroupResource extends DeconzResource {
   static endpoint = '/groups';
 
   getAction() {
@@ -41,7 +41,3 @@ export class GroupResource extends DeconzResource {
     log(this.attributes.id, this.attributes.name, shortenAction(this.attributes.action));
   }
 }
-
-export default {
-  GroupResource,
-};
