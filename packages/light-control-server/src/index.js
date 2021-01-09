@@ -1,7 +1,7 @@
 import {
   LightResource,
   GroupResource,
-  SensorResource
+  SensorResource,
 } from 'light-control-lib';
 import { makeLog, warning, notice } from 'light-control-lib/src/logging.js';
 import { reactOnButton } from './actions/react-on-button.js';

@@ -2,7 +2,6 @@
   "name": "light-control-app",
   "version": "1.0.0",
   "description": "Display and configure lights via deCONZ REST-API",
-  "main": "index.jsx",
   "author": "Christopher Schwartz",
   "license": "MIT",
   "scripts": {
@@ -13,6 +12,7 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "webpack": "^5.12.2",
     "webpack-nano": "^1.1.1",
     "webpack-plugin-serve": "^1.2.1"
   },

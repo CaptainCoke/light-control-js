@@ -2,18 +2,23 @@
   "name": "light-control",
   "version": "1.0.0",
   "description": "Control of Zigbee Light Link compatible lights",
+  "private": true,
   "scripts": {
     "test": "jest"
   },
   "author": "Christopher Schwartz",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.15.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-node": "^0.3.4",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
-    "lerna": "^3.22.1"
-  }
+    "eslint-plugin-react-hooks": "^4.2.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

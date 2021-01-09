@@ -2,8 +2,8 @@
 Control of Zigbee Light Link compatible lights
 
 ## Install
-- `npm install`
-- `npx lerna bootstrap --hoist`
+- `npm install -g yarn`
+- `yarn install`
 
 ## Run the server
 
@@ -25,7 +25,7 @@ Example:
 
 ### Run the server standalone
 - `cd packages/light-control-server`
-- `npm start`
+- `yarn start`
 
 ## Run the webapp
 
@@ -41,4 +41,4 @@ Example:
 
 ### Starting a local server that runs the webapp 
 - `cd packages/light-control-app`
-- `npm start`
+- `yarn start`

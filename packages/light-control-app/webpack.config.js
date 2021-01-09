@@ -55,6 +55,7 @@ module.exports = {
   ],
   resolve: {
     extensions: ['*', '.js', '.jsx'],
+    fallback: { querystring: false },
   },
   watch: true,
 };
