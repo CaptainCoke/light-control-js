@@ -1,4 +1,4 @@
-import DeconzResource from './group.js'
+import DeconzResource from './resource.js'
 import GroupResource from './group.js'
 import LightResource from './light.js'
 import SceneResource from './scene.js'

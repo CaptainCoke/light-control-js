@@ -5,7 +5,7 @@ import {
 } from 'light-control-lib';
 import { makeLog, warning, notice } from 'light-control-lib/src/logging.js';
 import { reactOnButton } from './actions/react-on-button.js';
-import { setupWebsocket } from './websocket';
+import { setupWebsocket } from './websocket.js';
 
 const log = makeLog('lcs:event');
 
