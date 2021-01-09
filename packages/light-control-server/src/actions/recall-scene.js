@@ -1,5 +1,5 @@
 import { GroupResource } from 'light-control-lib';
-import { makeLog, info } from 'light-control-lib/src/logging.js';
+import { makeLog, info, warning } from 'light-control-lib/src/logging.js';
 
 const log = makeLog('lcs:action');
 
@@ -11,7 +11,7 @@ export async function recallScene(gid, { id, offset }) {
     const scene = await group.scenes().detail(scid);
     scene.recall();
   } else {
-    log(warning('No scene for to recall'), { gid, scid: id, offset })
+    log(warning('No scene for to recall'), { gid, scid: id, offset });
   }
 }
 

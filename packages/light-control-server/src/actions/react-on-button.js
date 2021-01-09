@@ -1,7 +1,7 @@
 import fs from 'fs';
+import { makeLog, warning } from 'light-control-lib/src/logging.js';
 import { recallScene } from './recall-scene.js';
 import { groupAction } from './group-action.js';
-import { makeLog, warning } from 'light-control-lib/src/logging.js';
 
 const log = makeLog('lcs:action');
 
@@ -20,7 +20,7 @@ export function reactOnButton({ remote, button, action: pressaction }) {
     if (action) decodeAndPerformAction(action);
     else log('Not action for', { remote, button, pressaction });
   } else {
-    log(warning(`No button map for ${buttonevent} on remote ${remote}`));
+    log(warning(`No button mapped for received buttonevent on remote ${remote}`));
   }
 }
 

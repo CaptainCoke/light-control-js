@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import DeconzResource from './resource.js';
-import SceneResource from './scene.js';
 import { makeLog } from './logging.js';
 
 const log = makeLog('lcs:group');
@@ -21,19 +20,14 @@ export default class GroupResource extends DeconzResource {
     _.merge(this.attributes.action, cleanAction);
   }
 
-  scenes() {
-    const groupId = this.attributes.id;
-    class GroupScenes extends SceneResource {
-      static endpoint = `/groups/${groupId}/scenes`;
-      static gid = groupId;
-    };
-    return GroupScenes;
+  getCurrentSceneId() {
+    return parseInt(this.getAction().scene ?? 0, 10);
   }
 
   async getRelativeSceneId(offsetToCurrentScene) {
     const { resources: scenes } = await this.scenes().list();
     const numScenes = scenes.length;
-    const nextScene = (parseInt(this.getAction().scene ?? 0) + offsetToCurrentScene) % numScenes;
+    const nextScene = (this.getCurrentSceneId() + offsetToCurrentScene) % numScenes;
     return nextScene > 0 ? nextScene : numScenes + nextScene;
   }
 

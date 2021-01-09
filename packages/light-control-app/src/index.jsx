@@ -23,9 +23,10 @@ Light.propTypes = {
 };
 
 function LightList() {
-
   const [ids, setData] = useState([]);
-  useEffect(() => LightResource.list().then(({ resources }) => setData(resources.map((res) => res.id))), []);
+  useEffect(() => LightResource.list()
+    .then(({ resources }) => setData(resources.map((res) => res.id))),
+  []);
 
   return (
     <div>

@@ -13,8 +13,10 @@ module.exports = {
   settings: {
     'import/resolver': 'node',
   },
+  parser: 'babel-eslint',
   rules: {
     'no-console': 'off',
     'linebreak-style': 'off',
+    'import/extensions': ['error', 'ignorePackages'],
   },
 };
