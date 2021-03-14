@@ -1,20 +1,27 @@
 import fs from 'fs';
-import { makeLog, warning } from 'light-control-lib/src/logging.js';
-import { recallScene } from './recall-scene.js';
-import { groupAction } from './group-action.js';
+import { makeLog, warning } from 'light-control-lib/src/logging';
+import { RemoteButtonPress, GroupActionTransition } from 'light-control-lib/src/index';
+import { recallScene, SceneTransition } from './recall-scene';
+import { groupAction } from './group-action';
 
 const log = makeLog('lcs:action');
 
 const remoteButtonActions = JSON.parse(fs.readFileSync('config/remote-button-actions.json', 'utf8'));
 
-function decodeAndPerformAction(what) {
+type ButtonAction = {
+  group: number,
+  scene?: SceneTransition,
+  action?: GroupActionTransition,
+}
+
+function decodeAndPerformAction(what: ButtonAction) {
   const { group, scene, action } = what;
   if (group && scene) recallScene(group, scene);
   else if (group && action) groupAction(group, action);
   else log(warning('Unsupported button action'), what);
 }
 
-export function reactOnButton({ remote, button, action: pressaction }) {
+export function reactOnButton({ remote, button, action: pressaction } : RemoteButtonPress): void {
   if (button) {
     const action = remoteButtonActions?.[remote]?.[button];
     if (action) decodeAndPerformAction(action);

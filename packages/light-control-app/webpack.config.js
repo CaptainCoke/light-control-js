@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { WebpackPluginServe } = require('webpack-plugin-serve');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
@@ -7,14 +8,14 @@ module.exports = {
   context: path.resolve(__dirname, 'dist'),
   devtool: 'eval-source-map',
   entry: [
-    path.resolve(__dirname, 'src/index.jsx'),
+    path.resolve(__dirname, 'src/index.tsx'),
     'webpack-plugin-serve/client',
   ],
   mode: 'development',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|ts|tsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
@@ -54,7 +55,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['.json', '.mjs', '.js', '.ts', '.tsx'],
     fallback: { querystring: false },
   },
   watch: true,
