@@ -8,7 +8,7 @@ type DeconzDetailResponse = Record<string, unknown>
 
 type DeconzResponse = DeconzListResponse | DeconzDetailResponse;
 
-export default class DeconzClient extends DefaultClient {
+export class DeconzClient extends DefaultClient {
   // eslint-disable-next-line class-methods-use-this
   negotiateContent<T extends typeof Resource>(ResourceClass: T):
     ExtractorFunction<InstanceType<T>> {

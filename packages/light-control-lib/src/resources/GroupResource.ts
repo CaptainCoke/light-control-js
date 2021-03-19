@@ -1,14 +1,14 @@
 import _ from 'lodash';
-import DeconzResource from './DeconzResource';
+import { DeconzResource } from './DeconzResource';
 import { makeLog } from '../logging';
-import { GroupAction, GroupActionTransition } from '../types/groups';
+import { GroupAction, GroupActionTransition } from '../types';
 
 const log = makeLog('lcs:group');
 
 const shortenAction = (action: GroupAction) => _.pick(action, 'on', 'bri', 'scene');
 const sanitizeAction = (action: GroupAction) => _.pick(action, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
 
-export default abstract class GroupResource extends DeconzResource {
+export abstract class GroupResource extends DeconzResource {
   static endpoint = '/groups';
 
   getAction() : GroupAction {
@@ -22,7 +22,7 @@ export default abstract class GroupResource extends DeconzResource {
   }
 
   getCurrentSceneId(): number {
-    return parseInt(this.getAction().scene ?? '0', 10);
+    return this.getAction().scene ?? 0;
   }
 
   abstract numberOfScenes(): Promise<number>;

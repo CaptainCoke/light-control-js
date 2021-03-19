@@ -1,6 +1,6 @@
-import { GroupResource, GroupActionTransition } from 'light-control-lib/src/index';
-import { makeLog, info } from 'light-control-lib/src/logging';
+import { GroupResource, GroupActionTransition, logging } from 'light-control-lib';
 
+const { makeLog, info } = logging;
 const log = makeLog('lcs:action');
 
 export async function groupAction(gid: number, action: GroupActionTransition): Promise<void> {

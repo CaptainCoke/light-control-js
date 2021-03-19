@@ -16,7 +16,7 @@ export type GroupAction = {
   ct?: ColorTemperature,
   xy?: xy,
   effect?: Effect,
-  scene?: string,
+  scene?: number,
 }
 
 export type GroupActionTransition = GroupAction & {

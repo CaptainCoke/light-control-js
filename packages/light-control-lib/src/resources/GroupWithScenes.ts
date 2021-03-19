@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
 import Resource from 'rest-resource';
-import GroupResource from './GroupResource';
-import SceneResource from './SceneResource';
+import { GroupResource } from './GroupResource';
+import { SceneResource } from './SceneResource';
 
-export default class GroupWithScenesResource extends GroupResource {
+export class GroupWithScenesResource extends GroupResource {
   scenes(): typeof Resource {
     const groupId: number = this.attributes.id;
 

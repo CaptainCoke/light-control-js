@@ -1,16 +1,16 @@
 import fs from 'fs';
-import { makeLog, warning } from 'light-control-lib/src/logging';
-import { RemoteButtonPress, GroupActionTransition } from 'light-control-lib/src/index';
-import { recallScene, SceneTransition } from './recall-scene';
+import { RemoteButtonPress, GroupActionTransition, logging } from 'light-control-lib';
+import { recallScene, RequestedScene } from './recall-scene';
 import { groupAction } from './group-action';
 
+const { makeLog, warning } = logging;
 const log = makeLog('lcs:action');
 
 const remoteButtonActions = JSON.parse(fs.readFileSync('config/remote-button-actions.json', 'utf8'));
 
 type ButtonAction = {
   group: number,
-  scene?: SceneTransition,
+  scene?: RequestedScene,
   action?: GroupActionTransition,
 }
 

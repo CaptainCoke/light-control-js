@@ -1,4 +1,4 @@
-import { Button, ButtonPress, PressAction } from '../types/buttons';
+import { Button, ButtonPress, PressAction } from '../types/sensors';
 
 const buttonMaps : Record<string, Record<number, ButtonPress>> = {
   'TRADFRI remote control': {

@@ -1,20 +1,12 @@
-import DeconzResource from './DeconzResource';
-import buttonMaps from '../config/button-maps.config';
-import { ButtonPress } from '../types/buttons';
+import { DeconzResource } from './DeconzResource';
+import { ButtonPress, RemoteButtonPress } from '../types';
 import { makeLog } from '../logging';
+
+import buttonMaps from '../config/button-maps.config';
 
 const log = makeLog('lcs:sensor');
 
-export type SensorState = {
-  buttonevent?: number,
-  lastupdated: string,
-};
-
-export type RemoteButtonPress = ButtonPress & {
-  remote: number,
-}
-
-export default class SensorResource extends DeconzResource {
+export class SensorResource extends DeconzResource {
   static endpoint = '/sensors';
 
   buttons() : Record<number, ButtonPress> {

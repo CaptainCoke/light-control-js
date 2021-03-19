@@ -2,7 +2,7 @@
   "name": "light-control-lib",
   "version": "1.0.0",
   "description": "Common functionality to use deCONZ REST-API",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "test": "jest"

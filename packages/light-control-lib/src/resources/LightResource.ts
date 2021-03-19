@@ -1,50 +1,16 @@
 import _ from 'lodash';
-import DeconzResource from './DeconzResource';
+import { DeconzResource } from './DeconzResource';
 import { makeLog } from '../logging';
-import {
-  Brigthness,
-  ColorTemperature,
-  Hue,
-  Saturation,
-  xy,
-  Effect,
-  Alert,
-} from '../types/lights';
+import { LightState } from '../types';
 
 const log = makeLog('lcs:light');
-
-export type CtLightState = {
-  colormode: 'ct',
-  ct: ColorTemperature,
-}
-
-export type XyLightState = {
-  colormode: 'xy',
-  xy: xy,
-}
-
-export type HsLightState = {
-  colormode: 'hs',
-  hue: Hue,
-  sat: Saturation,
-}
-
-export type DimmableLightState = {
-  reachable: boolean,
-  on: boolean,
-  bri?: Brigthness,
-  effect?: Effect,
-  alert?: Alert,
-}
-
-export type LightState = (CtLightState | XyLightState | HsLightState) & DimmableLightState;
 
 export type LightStateTransition = LightState & { transitiontime: number };
 
 const shortenState = (state: LightState) => _.pick(state, 'on', 'bri', 'ct', 'xy');
 const sanitizeState = (state: LightState) => _.pick(state, 'on', 'bri', 'hue', 'sat', 'ct', 'xy');
 
-export default class LightResource extends DeconzResource {
+export class LightResource extends DeconzResource {
   static endpoint = '/lights';
 
   getState(): LightState {

@@ -26,3 +26,30 @@ export type Effect = 'none' | 'colorloop';
  * - lselect - lights are blinking a longer time
  */
 export type Alert = 'none' | 'select' | 'lselect';
+
+export type ColorTemperatureLightState = {
+  colormode: 'ct',
+  ct: ColorTemperature,
+}
+
+export type XyLightState = {
+  colormode: 'xy',
+  xy: xy,
+}
+
+export type HueSaturationLightState = {
+  colormode: 'hs',
+  hue: Hue,
+  sat: Saturation,
+}
+
+export type SwitchableLightState = {
+  reachable: boolean,
+  on: boolean,
+  bri?: Brigthness,
+  effect?: Effect,
+  alert?: Alert,
+}
+
+export type LightState = SwitchableLightState &
+  (ColorTemperatureLightState | XyLightState | HueSaturationLightState);

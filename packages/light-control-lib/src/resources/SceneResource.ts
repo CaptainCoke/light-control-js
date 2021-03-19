@@ -1,10 +1,10 @@
-import DeconzResource from './DeconzResource';
-import GroupResource from './GroupResource';
+import { DeconzResource } from './DeconzResource';
+import { GroupResource } from './GroupResource';
 import { makeLog } from '../logging';
 
 const log = makeLog('lcs:scene');
 
-export default abstract class SceneResource extends DeconzResource {
+export abstract class SceneResource extends DeconzResource {
   abstract group(): Promise<GroupResource>;
 
   async print(): Promise<void> {
