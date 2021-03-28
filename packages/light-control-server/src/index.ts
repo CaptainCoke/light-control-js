@@ -1,20 +1,33 @@
-import { DeconzResource, MessageFormat, logging } from 'light-control-lib';
+import { DeconzResource, SensorResource } from 'light-control-lib';
 import { setupWebsocket } from './websocket';
-import { onResourceChanged, onSceneRecalled } from './events';
+import {
+  useSensorEvents,
+  useGroupEvents,
+  useLightEvents,
+  addButtonEventHandler,
+} from './events';
+import { useRemoteMappingFromFile, handleButton } from './remotes';
 
-const { makeLog, warning } = logging;
-const log = makeLog('lcs:handler');
+async function setupService() {
+  // setup REST API
+  DeconzResource.setupApi(process.env.DECONZ_HOST, process.env.DECONZ_API_KEY);
 
-function handleMessage(msg: MessageFormat): void {
-  switch (msg.e) {
-    case 'changed': onResourceChanged(msg); break;
-    case 'scene-called': onSceneRecalled(msg); break;
-    default: log(warning('Unsupported message occured:'), msg);
-  }
+  // load actions to be perfomed on press of a remote button
+  await useRemoteMappingFromFile('./config/remote-button-actions.json');
+
+  const { resources: sensors } = await SensorResource.list();
+  sensors.forEach((sensor) => addButtonEventHandler(sensor, handleButton));
+
+  // setup event listening
+  useSensorEvents();
+  useGroupEvents();
+  useLightEvents();
+
+  // start listening to websocket events
+  await setupWebsocket();
+
+  // Send the ready signal to PM2
+  process?.send?.('ready');
 }
 
-// setup REST API
-DeconzResource.setupApi(process.env.DECONZ_HOST, process.env.DECONZ_API_KEY);
-
-// start listening to events
-setupWebsocket(handleMessage);
+setupService();

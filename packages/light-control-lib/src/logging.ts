@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import debug from 'debug';
 
+export const error = chalk.keyword('red');
 export const warning = chalk.keyword('orange');
 export const notice = chalk.gray;
 export const info = chalk.bgGreen.black;

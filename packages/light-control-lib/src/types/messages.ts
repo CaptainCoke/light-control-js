@@ -1,39 +1,59 @@
 import { LightState } from './lights';
 import { SensorState } from './sensors';
 
-type LightChangedMessage = {
-  r: 'lights',
+export enum EventType {
+  added = 'added',
+  changed = 'changed',
+  deleted = 'deleted',
+  sceneCalled = 'scene-called',
+}
+
+export enum ResourceType {
+  lights = 'lights',
+  sensors = 'sensors',
+  groups = 'groups',
+  scenes = 'scenes',
+}
+
+export type ResourceChangedMessage = {
+  e: EventType.changed,
+  id: number,
+  name?: string,
+}
+
+export type LightChangedMessage = ResourceChangedMessage & {
+  r: ResourceType.lights,
   state?: LightState,
 }
 
-type SensorChangedMessage = {
-  r: 'sensors',
+export type SensorChangedMessage = ResourceChangedMessage & {
+  r: ResourceType.sensors,
   state?: SensorState,
   config?: Record<string, unknown>,
 }
 
-type GroupChangedMessage = {
-  r: 'groups',
+export type GroupChangedMessage = ResourceChangedMessage & {
+  r: ResourceType.groups,
   state?: Record<string, boolean>,
 }
 
-export type ResourceChangedMessage = {
-  e: 'changed',
-  id: number,
-  name?: string,
-} & (LightChangedMessage | SensorChangedMessage | GroupChangedMessage);
+export type AnyResourceChangedMessage = (
+  LightChangedMessage |
+  SensorChangedMessage |
+  GroupChangedMessage);
 
 export type ResourceAddedOrDeletedMessage = {
-  e: 'added' | 'deleted',
-  r: 'groups' | 'sensors' | 'lights' | 'scenes',
+  e: EventType.added | EventType.deleted,
+  r: ResourceType,
   id: number,
 }
 
 export type SceneRecalledMessage = {
-  e: 'scene-called',
+  e: EventType.sceneCalled,
+  r: ResourceType.scenes,
   gid: number,
   scid: number,
 }
 
 export type MessageFormat =
-  ResourceAddedOrDeletedMessage | ResourceChangedMessage | SceneRecalledMessage;
+  ResourceAddedOrDeletedMessage | AnyResourceChangedMessage | SceneRecalledMessage;

@@ -19,4 +19,4 @@ export type SensorState = {
   lastupdated: string,
 };
 
-export type RemoteButtonPress = ButtonPress & { remote: number }
+export type RemoteButtonPress = ButtonPress & { remote: string }

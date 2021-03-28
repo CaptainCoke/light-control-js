@@ -10,13 +10,23 @@ export class SensorResource extends DeconzResource {
   static endpoint = '/sensors';
 
   buttons() : Record<number, ButtonPress> {
-    const mappedButtons = buttonMaps?.[<string> this.attributes.modelId];
-    return mappedButtons;
+    const model = this.attributes.modelid as string;
+    return buttonMaps[model];
+  }
+
+  hasButtons(): boolean {
+    return !!this.buttons();
   }
 
   button(buttonevent: number) : RemoteButtonPress {
     const { button, action } = this.buttons()?.[buttonevent];
     return { remote: this.attributes.id, button, action };
+  }
+
+  lastPressedButton(): RemoteButtonPress | null {
+    const buttonevent = this.attributes?.state?.buttonevent;
+    if (buttonevent) return this.button(buttonevent);
+    return null;
   }
 
   print() : void {

@@ -1,0 +1,22 @@
+[
+  ["Living Room", "left", "short", {
+    "group": 1,
+    "scene": { "offset": -1 }
+  }],
+  ["Living Room", "right", "short", {
+    "group": 1,
+    "scene": { "offset": 1 }
+  }],
+  ["Living Room", "up", "short", {
+    "group": 1,
+    "action": { "bri": 255 }
+  }],
+  ["Living Room", "down", "short", {
+    "group": 1,
+    "action": { "bri": 10 }
+  }],
+  ["Living Room", "power", "short", {
+    "group": 1,
+    "action": { "toggle": true }
+  }]
+]
