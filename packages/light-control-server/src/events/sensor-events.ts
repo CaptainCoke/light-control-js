@@ -5,6 +5,7 @@ import {
   EventType,
   MessageFormat,
   RemoteButtonPress,
+  SensorState,
 } from 'light-control-lib';
 import { addEventHandler } from './handler';
 
@@ -15,11 +16,11 @@ type RemoteHandler = (button: RemoteButtonPress) => Promise<void>;
 
 const registeredHandlers: Map<string, Array<RemoteHandler>> = new Map();
 
-async function notifyHandlers(sensor: SensorResource) {
-  const button = sensor.lastPressedButton();
+async function notifyHandlers(sensor: SensorResource, { buttonevent }: SensorState) {
+  const button = buttonevent ? sensor.button(buttonevent) : null;
   const handlers = registeredHandlers.get(sensor.id);
   if (button && handlers) {
-    log(`notifying ${handlers.length} handlers of remote ${sensor.id}`);
+    log(`notifying ${handlers.length} handlers of remote ${sensor.id} button event`);
     await Promise.all(handlers.map((handler) => handler(button)));
   }
 }
@@ -30,7 +31,7 @@ async function onSensorChanged(message: MessageFormat) {
     const sensor = await SensorResource.detail(id);
     await sensor.update();
     sensor.print();
-    await notifyHandlers(sensor);
+    if (message.state) await notifyHandlers(sensor, message.state);
   } else {
     log(error('Incompatible message received:'), message);
   }
