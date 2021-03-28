@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Monitor and control lights via deCONZ REST-API",
   "main": "src/index.ts",
-  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "ts-node-dev --respawn --require dotenv/config src/index.ts"

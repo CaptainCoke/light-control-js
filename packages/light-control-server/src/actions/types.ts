@@ -1,7 +1,7 @@
 import { GroupActionTransition } from 'light-control-lib';
 
 export type RequestedScene = {
-  id?: number
+  id?: string
   offset?: number
 }
 

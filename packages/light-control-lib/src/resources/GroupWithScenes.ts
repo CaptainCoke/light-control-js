@@ -24,4 +24,14 @@ export class GroupWithScenesResource extends GroupResource {
     const { resources: scenes } = await this.scenes().list();
     return scenes.length;
   }
+
+  async getRelativeSceneId(offsetToCurrentScene: number): Promise<string | null> {
+    const { resources: scenes } = await this.scenes().list();
+    const currentSceneId = this.getCurrentSceneId();
+    const sceneIndex = scenes.findIndex((scene) => scene.id === currentSceneId);
+    if (sceneIndex < 0) return null;
+
+    const nextScene = (sceneIndex + offsetToCurrentScene) % scenes.length;
+    return scenes[nextScene < 0 ? nextScene + scenes.length : nextScene].id;
+  }
 }

@@ -21,16 +21,8 @@ export abstract class GroupResource extends DeconzResource {
     _.merge(this.attributes.action, cleanAction);
   }
 
-  getCurrentSceneId(): number {
-    return this.getAction().scene ?? 0;
-  }
-
-  abstract numberOfScenes(): Promise<number>;
-
-  async getRelativeSceneId(offsetToCurrentScene: number): Promise<number> {
-    const numScenes = await this.numberOfScenes();
-    const nextScene = (this.getCurrentSceneId() + offsetToCurrentScene) % numScenes;
-    return nextScene > 0 ? nextScene : numScenes + nextScene;
+  getCurrentSceneId(): string {
+    return this.getAction().scene ?? '';
   }
 
   print(): void {
