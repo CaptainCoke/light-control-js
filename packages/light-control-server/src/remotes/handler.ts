@@ -9,13 +9,13 @@ import { AnyAction, handleAction } from '../actions';
 const { makeLog, warning } = logging;
 const log = makeLog('lcs:remotes:handler');
 
-const remoteButtonActions: Map<string, Map<Button, Map<PressAction, AnyAction>>> = new Map();
+const remoteButtonActions: Map<string, Map<Button, Map<PressAction, AnyAction[]>>> = new Map();
 
 export async function handleButton({ remote, button, action: pressaction } : RemoteButtonPress)
 : Promise<void> {
   if (button) {
-    const action = remoteButtonActions?.get(remote)?.get(button)?.get(pressaction);
-    if (action) await handleAction(action);
+    const actions = remoteButtonActions?.get(remote)?.get(button)?.get(pressaction);
+    if (actions) await Promise.all(actions.map(handleAction));
     else log('Not action for', { remote, button, pressaction });
   } else {
     log(warning(`No button mapped for received buttonevent on remote ${remote}`));
@@ -31,5 +31,6 @@ export function useRemoteMapping({
   const actionForRemote = remoteButtonActions.get(remote);
   if (actionForRemote && !actionForRemote.has(button)) actionForRemote.set(button, new Map());
   const actionForButton = actionForRemote?.get(button);
-  actionForButton?.set(pressaction, action);
+  if (actionForButton && !actionForButton.has(pressaction)) actionForButton.set(pressaction, []);
+  actionForButton?.get(pressaction)?.push(action);
 }

@@ -20,12 +20,20 @@ export type xy = [number, number];
  */
 export type Effect = 'none' | 'colorloop';
 
+export function isEffect(effect: unknown): effect is Effect {
+  return typeof effect === 'string' && (effect === 'none' || effect === 'colorloop');
+}
+
 /** A temporary alert effect:
  * - none - lights are not performing an alert
  * - select - lights are blinking a short time
  * - lselect - lights are blinking a longer time
  */
 export type Alert = 'none' | 'select' | 'lselect';
+
+export function isAlert(alert: unknown): alert is Alert {
+  return typeof alert === 'string' && (alert === 'none' || alert === 'select' || alert === 'lselect');
+}
 
 export type ColorTemperatureLightState = {
   colormode: 'ct',

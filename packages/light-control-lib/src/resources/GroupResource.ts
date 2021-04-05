@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { DeconzResource } from './DeconzResource';
 import { makeLog } from '../logging';
 import { GroupAction, GroupActionTransition } from '../types';
+import { LightResource } from './LightResource';
 
 const log = makeLog('lcs:group');
 
@@ -23,6 +24,19 @@ export abstract class GroupResource extends DeconzResource {
 
   getCurrentSceneId(): string {
     return this.getAction().scene ?? '';
+  }
+
+  async lights(): Promise<LightResource[]> {
+    const { lights } = this.attributes;
+    if (Array.isArray(lights)) {
+      return Promise.all(lights.map((id) => LightResource.detail(id)));
+    }
+    return [];
+  }
+
+  async isAnyLightOn(): Promise<boolean> {
+    const lights = await this.lights();
+    return lights.some((light) => light.getState().on);
   }
 
   print(): void {

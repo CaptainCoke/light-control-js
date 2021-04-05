@@ -1,10 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import Resource from 'rest-resource';
+import { DeconzResource } from './DeconzResource';
 import { GroupResource } from './GroupResource';
 import { SceneResource } from './SceneResource';
 
 export class GroupWithScenesResource extends GroupResource {
-  scenes(): typeof Resource {
+  scenes(): typeof DeconzResource {
     const groupId: number = this.attributes.id;
 
     class GroupScenes extends SceneResource {

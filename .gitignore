@@ -8,3 +8,4 @@ node_modules/
 .env
 .eslintcache
 packages/light-control-app/dist/
+packages/light-control-server/config/*.json

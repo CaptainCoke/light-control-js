@@ -1,22 +1,33 @@
 [
-  ["Living Room", "left", "short", {
-    "group": 1,
-    "scene": { "offset": -1 }
+  ["Wall Switch", "left", "short", {
+    "group": "Living Room",
+    "changeScene": { "offset": -1 }
   }],
-  ["Living Room", "right", "short", {
-    "group": 1,
-    "scene": { "offset": 1 }
+  ["Wall Switch", "right", "short", {
+    "group": "Living Room",
+    "changeScene": { "offset": 1 }
   }],
-  ["Living Room", "up", "short", {
-    "group": 1,
+  ["Wall Switch", "up", "short", {
+    "group": "Living Room",
     "action": { "bri": 255 }
   }],
-  ["Living Room", "down", "short", {
-    "group": 1,
+  ["Wall Switch", "down", "short", {
+    "group": "Living Room",
     "action": { "bri": 10 }
   }],
-  ["Living Room", "power", "short", {
-    "group": 1,
-    "action": { "toggle": true }
+  ["Wall Switch", "power", "short", {
+    "group": "Living Room",
+    "hoursOfDay": [6, 18],
+    "toggleScene": { "scene": "Daylight" }
+  }],
+  ["Wall Switch", "power", "short", {
+    "group": "Living Room",
+    "hoursOfDay": [18, 22],
+    "toggleScene": { "scene": "Dimmed" }
+  }],
+  ["Wall Switch", "power", "short", {
+    "group": "Living Room",
+    "hoursOfDay": [22, 6],
+    "toggleScene": { "scene": "Nightlight" }
   }]
 ]
