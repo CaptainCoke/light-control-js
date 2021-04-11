@@ -3,6 +3,7 @@ import { DeconzResource, LightResource, LightState } from 'light-control-lib';
 
 type LightInfo = {
   name: string,
+  type: string,
   state: LightState,
 }
 
@@ -13,7 +14,11 @@ export function useLight(id: number): {
 } {
   const [light, setLight] = useState<LightInfo | null>(null);
   useEffect(() => {
-    LightResource.detail(id).then((res) => setLight({ name: res.get('name'), state: res.getState() }));
+    LightResource.detail(id).then((res) => setLight({
+      name: res.get('name'),
+      type: res.get('type'),
+      state: res.getState(),
+    }));
   }, []);
 
   const isLoading = !light;

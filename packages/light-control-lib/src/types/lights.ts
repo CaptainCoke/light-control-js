@@ -53,7 +53,7 @@ export type HueSaturationLightState = {
 
 export type SwitchableLightState = {
   reachable: boolean,
-  on: boolean,
+  on?: boolean,
   bri?: Brigthness,
   effect?: Effect,
   alert?: Alert,
