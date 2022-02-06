@@ -8,7 +8,7 @@ import {
 const { makeLog, warning } = logging;
 const log = makeLog('lcs:events:handler');
 
-type EventHandler = (message: MessageFormat) => void;
+type EventHandler = (message: MessageFormat) => Promise<void>;
 
 const registeredHandlers: Map<string, EventHandler[]> = new Map<string, EventHandler[]>();
 
@@ -24,9 +24,10 @@ export function addEventHandler(
   else registeredHandlers.set(key, [handler]);
 }
 
-export function handleEvents(message: MessageFormat): void {
+export async function handleEvents(message: MessageFormat): Promise<void> {
   const { e: event, r: resource } = message;
   const handlers = registeredHandlers.get(handlerKey(resource, event));
-  if (handlers) handlers.forEach((handler) => handler(message));
-  else log(warning('Unhandled message received:'), message);
+  if (handlers) {
+    await Promise.all(handlers.map((handler) => handler(message)));
+  } else log(warning('Unhandled message received:'), message);
 }

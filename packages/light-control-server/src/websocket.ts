@@ -4,7 +4,7 @@ import { handleEvents } from './events';
 
 const log = logging.makeLog('lcs:ws');
 
-let deconzWebSocket;
+let deconzWebSocket: WebSocket;
 
 export async function setupWebsocket() : Promise<void> {
   const host = process.env.DECONZ_HOST;

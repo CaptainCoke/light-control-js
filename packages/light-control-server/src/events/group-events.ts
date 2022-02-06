@@ -10,26 +10,26 @@ import { addEventHandler } from './handler';
 const { makeLog, error } = logging;
 const log = makeLog('lcs:events:groups');
 
-async function updateGroup(id: number) {
+async function updateGroup(id: string) {
   const group = await GroupResource.detail(id);
   await group.update();
   group.print();
 }
 
-function onGroupChanged(message: MessageFormat): void {
+async function onGroupChanged(message: MessageFormat): Promise<void> {
   if (message.e === EventType.changed && message.r === ResourceType.groups) {
     const { id } = message;
-    updateGroup(id);
+    await updateGroup(id);
   } else {
     log(error('Incompatible message received:'), message);
   }
 }
 
-function onSceneRecalled(message: MessageFormat): void {
+async function onSceneRecalled(message: MessageFormat): Promise<void> {
   if (message.e === EventType.sceneCalled) {
     const { gid, scid } = message;
     log(`Scene ${scid} of group ${gid} was recalled`);
-    updateGroup(gid);
+    await updateGroup(gid);
   } else {
     log(error('Incompatible message received:'), message);
   }
