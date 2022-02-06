@@ -1,4 +1,5 @@
 import { GroupActionTransition } from 'light-control-lib';
+import { isArray, isNumber } from 'ts-util-is';
 
 export type RequestedScene = {
   scene?: string
@@ -14,5 +15,6 @@ export type AnyAction = {
 } & (ChangeSceneAction | ChangeGroupAction | ToggleSceneAction);
 
 export function isHoursOfDay(hoursOfDay: unknown): hoursOfDay is [number, number] {
-  return Array.isArray(hoursOfDay) && hoursOfDay.length === 2 && hoursOfDay.every((x) => typeof x === 'number' && x >= 0 && x <= 24);
+  return isArray(hoursOfDay) && hoursOfDay.length === 2
+    && hoursOfDay.every((x) => isNumber(x) && x >= 0 && x <= 24);
 }

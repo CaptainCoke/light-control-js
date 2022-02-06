@@ -1,5 +1,11 @@
 import { promises as fs } from 'fs';
 import {
+  isArray,
+  isNumber,
+  isString,
+  isUndefined,
+} from 'ts-util-is';
+import {
   Button,
   PressAction,
   SensorResource,
@@ -49,7 +55,7 @@ function getPressAction(pressName: string): PressAction {
 
 async function getSceneRequest(gid: string, scene: unknown): Promise<RequestedScene> {
   const { scene: idOrName, offset } = scene as Record<string, unknown>;
-  if (typeof idOrName === 'string' || typeof idOrName === 'number') {
+  if (isString(idOrName) || isNumber(idOrName)) {
     const group = await GroupResource.detail(gid);
     return { scene: await getResourceId(group.scenes(), idOrName) };
   }
@@ -68,10 +74,10 @@ async function getAnyAction(actionObject: Record<string, unknown>): Promise<AnyA
     action,
   } = actionObject;
 
-  if (!(typeof idOrName === 'string' || typeof idOrName === 'number')) throw new Error(`Unknown group for ${actionObject}`);
+  if (!(isString(idOrName) || isNumber(idOrName))) throw new Error(`Unknown group for ${actionObject}`);
   const group = await getResourceId(GroupResource, idOrName);
 
-  if (!(typeof hoursOfDay === 'undefined' || isHoursOfDay(hoursOfDay))) throw new Error(`Unknown hours of day for ${actionObject}`);
+  if (!(isUndefined(hoursOfDay) || isHoursOfDay(hoursOfDay))) throw new Error(`Unknown hours of day for ${actionObject}`);
 
   const anyAction = { group, hoursOfDay };
 
@@ -83,7 +89,7 @@ async function getAnyAction(actionObject: Record<string, unknown>): Promise<AnyA
 
 export async function useRemoteMappingFromFile(filename: string): Promise<void> {
   const config = JSON.parse(await fs.readFile(filename, 'utf8'));
-  if (!Array.isArray(config)) throw new Error('invalid file format');
+  if (!isArray(config)) throw new Error('invalid file format');
   const promises = config.map(async ([remote, button, pressAction, action]) => useRemoteMapping({
     remote: await getResourceId(SensorResource, remote),
     button: getButton(button),

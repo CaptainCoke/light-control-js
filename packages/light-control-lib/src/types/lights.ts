@@ -1,3 +1,5 @@
+import { isString } from 'ts-util-is';
+
 /** Integer in 0...255 */
 export type Brigthness = number;
 
@@ -21,7 +23,7 @@ export type xy = [number, number];
 export type Effect = 'none' | 'colorloop';
 
 export function isEffect(effect: unknown): effect is Effect {
-  return typeof effect === 'string' && (effect === 'none' || effect === 'colorloop');
+  return isString(effect) && (effect === 'none' || effect === 'colorloop');
 }
 
 /** A temporary alert effect:
@@ -32,7 +34,7 @@ export function isEffect(effect: unknown): effect is Effect {
 export type Alert = 'none' | 'select' | 'lselect';
 
 export function isAlert(alert: unknown): alert is Alert {
-  return typeof alert === 'string' && (alert === 'none' || alert === 'select' || alert === 'lselect');
+  return isString(alert) && (alert === 'none' || alert === 'select' || alert === 'lselect');
 }
 
 export type ColorTemperatureLightState = {

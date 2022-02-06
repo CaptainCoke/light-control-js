@@ -17,7 +17,7 @@ export enum ResourceType {
 
 export type ResourceChangedMessage = {
   e: EventType.changed,
-  id: number,
+  id: string,
   name?: string,
 }
 
@@ -45,14 +45,14 @@ export type AnyResourceChangedMessage = (
 export type ResourceAddedOrDeletedMessage = {
   e: EventType.added | EventType.deleted,
   r: ResourceType,
-  id: number,
+  id: string,
 }
 
 export type SceneRecalledMessage = {
   e: EventType.sceneCalled,
   r: ResourceType.scenes,
-  gid: number,
-  scid: number,
+  gid: string,
+  scid: string,
 }
 
 export type MessageFormat =

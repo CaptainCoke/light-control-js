@@ -1,4 +1,11 @@
 import {
+  isArray,
+  isBoolean,
+  isNumber,
+  isString,
+  isUndefined,
+} from 'ts-util-is';
+import {
   Brigthness,
   ColorTemperature,
   Hue,
@@ -32,14 +39,14 @@ export function isGroupAction(action: unknown): action is GroupAction {
     effect,
     scene,
   } = action as Record<string, unknown>;
-  return (typeof on === 'undefined' || typeof on === 'boolean')
-    && (typeof bri === 'undefined' || typeof bri === 'number')
-    && (typeof hue === 'undefined' || typeof hue === 'number')
-    && (typeof sat === 'undefined' || typeof sat === 'number')
-    && (typeof ct === 'undefined' || typeof ct === 'number')
-    && (typeof xyElem === 'undefined' || (Array.isArray(xyElem) && xyElem.length === 2 && xyElem.every((x) => typeof x === 'number')))
-    && (typeof effect === 'undefined' || isEffect(effect))
-    && (typeof scene === 'undefined' || typeof scene === 'string');
+  return (isUndefined(on) || isBoolean(on))
+    && (isUndefined(bri) || isNumber(bri))
+    && (isUndefined(hue) || isNumber(hue))
+    && (isUndefined(sat) || isNumber(sat))
+    && (isUndefined(ct) || isNumber(ct))
+    && (isUndefined(xyElem) || (isArray(xyElem) && xyElem.length === 2 && xyElem.every(isNumber)))
+    && (isUndefined(effect) || isEffect(effect))
+    && (isUndefined(scene) || isString(scene));
 }
 
 export type GroupActionTransition = GroupAction & {
@@ -55,8 +62,8 @@ export function isGroupActionTransition(action: unknown): action is GroupActionT
     transitiontime,
     ...rest
   } = action as Record<string, unknown>;
-  return (typeof toggle === 'undefined' || typeof toggle === 'boolean')
-    && (typeof alert === 'undefined' || isAlert(alert))
-    && (typeof transitiontime === 'undefined' || typeof transitiontime === 'number')
-    && (typeof rest === 'undefined' || isGroupAction(rest));
+  return (isUndefined(toggle) || isBoolean(toggle))
+    && (isUndefined(alert) || isAlert(alert))
+    && (isUndefined(transitiontime) || isNumber(transitiontime))
+    && (isUndefined(rest) || isGroupAction(rest));
 }

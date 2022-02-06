@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { isArray } from 'ts-util-is';
 import { DeconzResource } from './DeconzResource';
 import { makeLog } from '../logging';
 import { GroupAction, GroupActionTransition } from '../types';
@@ -28,7 +29,7 @@ export abstract class GroupResource extends DeconzResource {
 
   async lights(): Promise<LightResource[]> {
     const { lights } = this.attributes;
-    if (Array.isArray(lights)) {
+    if (isArray(lights)) {
       return Promise.all(lights.map((id) => LightResource.detail(id)));
     }
     return [];

@@ -32,6 +32,6 @@ export class GroupWithScenesResource extends GroupResource {
     if (sceneIndex < 0) return null;
 
     const nextScene = (sceneIndex + offsetToCurrentScene) % scenes.length;
-    return scenes[nextScene < 0 ? nextScene + scenes.length : nextScene].id;
+    return scenes[nextScene < 0 ? nextScene + scenes.length : nextScene]?.id ?? null;
   }
 }

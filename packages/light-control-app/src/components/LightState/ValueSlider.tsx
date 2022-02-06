@@ -49,7 +49,6 @@ export function ValueSlider(props: Props): ReactElement {
             id="temperature-text"
             value={value}
             margin="dense"
-            size="small"
             endAdornment={endAdornment}
             inputProps={{
               step: 1,

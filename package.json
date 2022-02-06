@@ -4,7 +4,9 @@
   "description": "Control of Zigbee Light Link compatible lights",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "check": "tsc --pretty --noEmit",
+    "lint": "eslint ."
   },
   "author": "Christopher Schwartz",
   "license": "MIT",
