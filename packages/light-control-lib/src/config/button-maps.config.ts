@@ -18,6 +18,10 @@ const buttonMaps : Record<string, Record<number, ButtonPress>> = {
     5002: { button: Button.RIGHT, action: PressAction.SHORT },
     5003: { button: Button.RIGHT, action: PressAction.LONG },
   },
+  RDM001: {
+    1000: { button: Button.POWER, action: PressAction.SHORT },
+    2000: { button: Button.POWER, action: PressAction.LONG },
+  },
 };
 
 export default buttonMaps;
